@@ -31,6 +31,11 @@ QPushButton:hover {
     border-bottom: 2px solid white;
 }
 
+QPushButton:focus {
+    background: rgba(179, 213, 226, 0.445);
+    border-bottom: 2px solid white;
+}
+
 #file {
     border: 2px solid white;
 }
@@ -42,5 +47,7 @@ QPushButton:hover {
 }
 
 #solve {
-    transition: linear 0.5s;
+    /* transition: linear 0.5s; */
+    border: 2px solid white;
 }
+
