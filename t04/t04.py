@@ -1,7 +1,7 @@
 
 
 
-def gauss(matrix, vector):
+def jordan_gauss(matrix, vector):
     pass
 
 
@@ -12,7 +12,7 @@ def main():
         [3, -1, 2],
     ]
     vector = [2, -2, 2]
-    print(f'det: {gauss(matrix, vector)}')
+    print(f'Result: {jordan_gauss(matrix, vector)}')
 
 
 if __name__ == '__main__':

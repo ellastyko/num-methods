@@ -2,9 +2,6 @@ import math
 import numpy as np 
 import copy
 
-def determinant(matrix):
-    pass
-
 def cramer(matrix, vector):
     
     det = np.linalg.det(matrix)
@@ -34,4 +31,4 @@ if __name__ == '__main__':
         [3, -1, 2],
     ]
     vector = [2, -2, 2]
-    print(f'det: {cramer(matrix, vector)}')
+    print(f'Result: {cramer(matrix, vector)}')
