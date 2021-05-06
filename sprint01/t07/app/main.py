@@ -1,12 +1,13 @@
-import sys
-import numpy as np
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, \
                             QFileDialog, QPlainTextEdit, QWidget, QMessageBox
 from PyQt5.QtGui import QPixmap, QIcon, QImage, QPalette, QBrush
 from PyQt5 import QtCore
-from methods import Method
+import numpy as np
 import re
-import html
+import sys
+# Methods from previous tasks
+from methods import Method
+
 
 class ErrorWindow(QWidget):
     
@@ -22,9 +23,6 @@ class ErrorWindow(QWidget):
 
 
 class Window(QWidget):
-
-    solve_method = None
-    file_path = None
 
     def __init__(self, error):
         super().__init__()
@@ -98,15 +96,23 @@ class Window(QWidget):
         self.result = QLabel(self)
         self.result.setObjectName("result")
         self.result.setGeometry(450, 150, 400, 400)
-        # layout = QVBoxLayout(self.result)
+        self.result.setAlignment(QtCore.Qt.AlignCenter)
+        self.result.setVisible(False)
            
 
     def convert(self, temp):
         matrix, vector = [], []
+        # print(temp)
         for i in range(len(temp) - 1):
-            if temp[i] != '':
+            if re.search(r'[0-9]', temp[i]):
                 matrix += [temp[i].split(' ')]
 
+        # print(matrix)
+        for i in range(len(matrix)):
+            print('there')
+            matrix[i].remove('')
+
+        # print(matrix)        
         for i in range(len(matrix)):
             for j in range(len(matrix[i])):
                 matrix[i][j] = int(matrix[i][j])
@@ -119,76 +125,86 @@ class Window(QWidget):
 
         return matrix, vector
             
+
     # After submit of entered matrix
     def __solve(self):
 
         matrix, vector = [], []
-        if self.file_path != None:
-            # Обработка файла .txt
-            try:
-                text = open(self.file_path, 'r+').read()                 
-                temp = text.split('\n') 
-                temp.pop(0)
-            except Exception as e:
-                print(e)
-                self.error.show('Unable to open file')
-                return 
-        else:
-            try:
-                text = self.line.toPlainText() + '\n'     
-                temp = text.split('\n')
-            except Exception as e:
-                print(e)
-                self.error.show('Unable to read matrix')
-                return
-
+        try:
+            text = self.line.toPlainText() + '\n'
+            if re.search(r'[0-9]', text) == None:
+                return self.error.show('Please input matrix!')    
+            if re.search(r'[^0-9\-]', text) == None:
+                return self.error.show('Invalid input!')    
+            temp = text.split('\n')
+        except Exception as e:
+            print(e)
+            return self.error.show('Unable to read matrix')
+                
 
         try:       
             matrix, vector = self.convert(temp)
         except Exception as e:
-            self.error.show('Invalid matrix')
-            return
-
-        if self.solve_method.degeneracy(matrix, vector) == False:
-            self.error.show('Matrix is degeneracy')
-            return
+            print(e)
+            return self.error.show('Invalid matrix')
+            
+        if self.solve_method.degeneracy(matrix, vector) == False:       
+            return self.error.show('Matrix is degeneracy')
         # print(np.matrix(matrix))
         # print(np.matrix(vector))
+        method = self.sender().objectName()
         if matrix is not None:
-            result = self.route(matrix, vector, self.sender().objectName(), len(matrix)) 
-        
-        string = '<h3>Roots:</h3>'
+            status, result = self.route(matrix, vector, method, len(matrix)) 
+
+        # Show mistake
+        if status != True:
+            return self.error.show(result)
+
+        string = f'<h1>{method.upper()}</h1><h3>Roots:</h3>'
         for i in range(len(result)):
             string += f'<p>x<sub>{i}</sub> = {result[i]} </p>'
-        self.result.setAlignment(QtCore.Qt.AlignCenter)
+        
         self.result.setText(string)
-        print(result)
+        self.result.setVisible(True)
+
+        # print(result)
         
 
 
     def file_open(self):
 
-        self.file_path = QFileDialog(self).getOpenFileName()[0]
-        if self.file_path == '':
-            self.file_path = None
+        path = QFileDialog(self).getOpenFileName()[0]
+        if path == '':
             return False
 
-        path = self.file_path.split('/')
-        title = '.../' + path[len(path) - 1]
+        p = path.split('/')
+        title = '.../' + p[len(p) - 1]
         self.file.setText(title)
+
+        # Set text from file to textarea
+        try:
+            text = open(path, 'r+').read()      
+            while text[0] != '\n':
+                text = text[1:]
+            text = text[1:]
+        except Exception as e:
+            print(e)
+            return self.error.show('Unable to open file')
+
+        self.line.setPlainText(text)   
 
 
     def route(self, matrix=None, vector=None, method=None, size=None):
-        
+
         if method == 'cramer':
             if size > 3:
-                return self.error.show('Size of matrix is too big to use Cramer`s method')
+                return False, 'Size of matrix is too big to use Cramer`s method'
             return self.solve_method.cramer(matrix, vector)
         elif method == 'gauss':
             return self.solve_method.gauss(matrix, vector)
         elif method == 'seidel':
             return self.solve_method.seidel(matrix, vector)
-        elif method == 'jordan_gauss':
+        elif method == 'jordan-gauss':
             return self.solve_method.jordan_gauss(matrix, vector)
         elif method == 'jacobi':
             return self.solve_method.jacobi(matrix, vector)

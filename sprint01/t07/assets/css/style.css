@@ -54,7 +54,7 @@ QLayout {
     line-height: 20px;
     color: white;
     font: 400 16px 'Arial';
-    background-color: rgba(179, 213, 226, 0.445);
+    background-color: rgba(179, 213, 226, 0.26);
     border-radius: 20px;
 }
 

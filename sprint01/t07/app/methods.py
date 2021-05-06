@@ -17,6 +17,19 @@ class Method:
             return False
 
 
+    def checking(self, matrix, vector, roots):
+        res = 0
+        for i in range(len(matrix)):
+            for j in range(len(matrix[i])):
+                res += matrix[i][j] * roots[j]
+
+            if res != vector[i]:
+                return False
+            res = 0
+
+        return True
+
+
     def cramer(self, matrix, vector):     
 
         roots = []
@@ -31,7 +44,7 @@ class Method:
             root = d / det
             roots.append(root)
             temp = copy.deepcopy(matrix)
-        return roots
+        return True, roots
 
 
     def gauss(self, matrix, vector):
@@ -46,7 +59,7 @@ class Method:
                     row = i
                 
             if row == None:
-                return 'Error'
+                return False, 'Invalid matrix'
 
             if row != col:
                 matrix[row], matrix[col] = matrix[col], matrix[row]
@@ -65,7 +78,7 @@ class Method:
         for i in range((len(vector) - 1), -1, -1):
             roots[i] = vector[i] - sum(x * a for x, a in zip(roots[(i + 1):], matrix[i][(i + 1):]))
 
-        return roots
+        return True, roots
 
 
     def seidel(self, matrix, vector):
@@ -87,12 +100,45 @@ class Method:
             if e < 0.0001:
                 break 
             
-
-        return roots
+        return True, roots
 
 
     def jordan_gauss(self, matrix, vector):
-        pass
 
-    def jacobi(self, matrix, vector):
-        pass
+        n = len(matrix)
+        roots = np.zeros(n)
+
+        # Matrix in extended format
+        for i in range(n):
+            matrix[i].append(vector[i])
+
+        # Applying Gauss Jordan Elimination
+        for i in range(n):
+            if matrix[i][i] == 0.0:
+                return False, 'Divide by zero detected!'
+                
+            for j in range(n):
+                if i != j:
+                    ratio = matrix[j][i]/matrix[i][i]
+
+                    for k in range(n+1):
+                        matrix[j][k] = matrix[j][k] - ratio * matrix[i][k]
+
+        # Obtaining Solution
+        for i in range(n):
+            roots[i] = matrix[i][n] / matrix[i][i]
+
+        return True, roots
+
+
+    def jacobi(self, matrix, vector, N = 100):
+
+        roots = [0 for i in range(len(matrix))]  	
+        D = np.diag(matrix)  				
+        R = matrix - np.diagflat(D) 		
+                                            
+
+        for i in range(N):  		
+            roots = (vector - np.dot(R, roots)) / D
+
+        return True, roots
