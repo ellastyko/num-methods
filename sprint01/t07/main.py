@@ -5,6 +5,7 @@ from PyQt5 import QtCore
 import numpy as np
 import re
 import sys
+import copy
 # Methods from previous tasks
 from methods import Method
 
@@ -32,8 +33,8 @@ class Window(QWidget):
 
         self.setObjectName("main")
         self.setWindowTitle("Solving of Systems of linear equations")
-        self.setWindowIcon(QIcon('../assets/images/icon.png'))
-        self.setStyleSheet(open('../assets/css/style.css').read())
+        self.setWindowIcon(QIcon('./assets/images/icon.png'))
+        self.setStyleSheet(open('./assets/css/style.css').read())
         self.setMinimumSize(1000, 650)
         self.setMaximumSize(1000, 650)
         self.setGeometry(300, 100, 800, 600)
@@ -43,9 +44,8 @@ class Window(QWidget):
 
     def initUI(self):
         
-
         # Background
-        img = QImage("../assets/images/city.webp")
+        img = QImage("./assets/images/city.webp")
         sImage = img.scaled(QtCore.QSize(1000, 650))
         palette = QPalette()
         palette.setBrush(QPalette.Window, QBrush(sImage))
@@ -95,10 +95,25 @@ class Window(QWidget):
         # Result widget
         self.result = QLabel(self)
         self.result.setObjectName("result")
-        self.result.setGeometry(450, 150, 400, 400)
+        self.result.setGeometry(450, 150, 400, 350)
         self.result.setAlignment(QtCore.Qt.AlignCenter)
         self.result.setVisible(False)
-           
+
+        self.check = QPushButton('Check it' , self)
+        self.check.setObjectName("checkit")
+        self.check.setGeometry(575, 550, 150, 35)
+        self.check.clicked.connect(self.checkit)
+        self.check.setVisible(False)
+
+
+    def checkit(self):
+        if self.check.text() == 'Check it':
+            self.result.setText(self.checkup_data)
+            self.check.setText('Back')
+        else:
+            self.result.setText(self.result_data)
+            self.check.setText('Check it')
+
 
     def convert(self, temp):
         matrix, vector = [], []
@@ -109,8 +124,8 @@ class Window(QWidget):
 
         # print(matrix)
         for i in range(len(matrix)):
-            print('there')
-            matrix[i].remove('')
+            if '' in matrix[i]:
+                matrix[i].remove('')
 
         # print(matrix)        
         for i in range(len(matrix)):
@@ -153,22 +168,28 @@ class Window(QWidget):
         # print(np.matrix(matrix))
         # print(np.matrix(vector))
         method = self.sender().objectName()
+        print(matrix)
         if matrix is not None:
-            status, result = self.route(matrix, vector, method, len(matrix)) 
-
+            status, result = self.route(copy.deepcopy(matrix), copy.deepcopy(vector), method, len(matrix)) 
+        print(result)
         # Show mistake
         if status != True:
             return self.error.show(result)
+
+        
 
         string = f'<h1>{method.upper()}</h1><h3>Roots:</h3>'
         for i in range(len(result)):
             string += f'<p>x<sub>{i}</sub> = {result[i]} </p>'
         
-        self.result.setText(string)
-        self.result.setVisible(True)
+        # Data that show after solving of SLAE
+        self.result_data = string
+        self.checkup_data = self.checking(matrix, vector, result)
 
-        # print(result)
-        
+        # Setting string in label that show roots of SLAE
+        self.result.setText(self.result_data)
+        self.result.setVisible(True)
+        self.check.setVisible(True)       
 
 
     def file_open(self):
@@ -192,6 +213,21 @@ class Window(QWidget):
             return self.error.show('Unable to open file')
 
         self.line.setPlainText(text)   
+
+
+    def checking(self, matrix, vector, roots):
+        print(matrix, vector, roots)
+        print(self.solve_method.checking(matrix, vector, roots))
+        string = '<h2>Checking</h2>'
+        for i in range(len(matrix)):
+            string += '<p>'
+            for j in range(len(matrix[i])):
+                if j != 0:
+                    string += ' + '
+                string += f'{matrix[i][j]}*{roots[j]}'  
+                      
+            string += f' = {vector[i]}</p>'
+        return string
 
 
     def route(self, matrix=None, vector=None, method=None, size=None):

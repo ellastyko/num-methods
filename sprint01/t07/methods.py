@@ -1,6 +1,5 @@
 import numpy as np
 import math 
-import plotly as pt
 import copy
 
 

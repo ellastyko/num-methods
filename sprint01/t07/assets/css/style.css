@@ -46,10 +46,6 @@ QPushButton:focus {
     background-color: rgba(196, 192, 192, 0.301);
 }
 
-QLayout {
-    background-color: aquamarine;
-}
-
 #result {
     line-height: 20px;
     color: white;
@@ -58,3 +54,15 @@ QLayout {
     border-radius: 20px;
 }
 
+#checkit {
+    border: 2px solid white;
+    background: rgba(117, 190, 218, 0.0);
+}
+
+#checkit:hover {
+    background: rgba(117, 189, 218, 0.281);
+}
+
+#checkit:focus {
+    background: rgba(117, 190, 218, 0.0);
+}
