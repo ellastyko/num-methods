@@ -127,6 +127,16 @@ class Window(QWidget):
             if '' in matrix[i]:
                 matrix[i].remove('')
 
+        # Checking size of matrix
+        row = len(matrix)
+        col = len(matrix[0])
+        if row + 1 != col:
+            raise 'Invalid size'
+        for i in range(len(matrix)):
+            if col != len(matrix[i]):
+                raise 'Invalid size'
+
+
         # print(matrix)        
         for i in range(len(matrix)):
             for j in range(len(matrix[i])):
@@ -149,8 +159,8 @@ class Window(QWidget):
             text = self.line.toPlainText() + '\n'
             if re.search(r'[0-9]', text) == None:
                 return self.error.show('Please input matrix!')    
-            if re.search(r'[^0-9\-]', text) == None:
-                return self.error.show('Invalid input!')    
+            if re.search(r'[^0-9\-\s]', text) != None:
+                return self.error.show('Invalid symbol!')    
             temp = text.split('\n')
         except Exception as e:
             print(e)
@@ -163,15 +173,15 @@ class Window(QWidget):
             print(e)
             return self.error.show('Invalid matrix')
             
-        if self.solve_method.degeneracy(matrix, vector) == False:       
+        if self.solve_method.degeneracy(matrix) == False:       
             return self.error.show('Matrix is degeneracy')
         # print(np.matrix(matrix))
         # print(np.matrix(vector))
         method = self.sender().objectName()
-        print(matrix)
+        # print(matrix)
         if matrix is not None:
             status, result = self.route(copy.deepcopy(matrix), copy.deepcopy(vector), method, len(matrix)) 
-        print(result)
+        # print(result)
         # Show mistake
         if status != True:
             return self.error.show(result)
@@ -233,7 +243,7 @@ class Window(QWidget):
     def route(self, matrix=None, vector=None, method=None, size=None):
 
         if method == 'cramer':
-            if size > 3:
+            if size > 4:
                 return False, 'Size of matrix is too big to use Cramer`s method'
             return self.solve_method.cramer(matrix, vector)
         elif method == 'gauss':

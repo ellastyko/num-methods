@@ -8,7 +8,7 @@ class Method:
     def __init__(self):
         pass
 
-    def degeneracy(self, matrix, vector):
+    def degeneracy(self, matrix):
         det = np.linalg.det(matrix)
         if (det != 0): 
             return True
@@ -86,7 +86,7 @@ class Method:
         roots = [0.0 for i in range(length)] # Fill zeros
         e = 0.0
         while True:
-            root = np.copy(roots)
+            root = copy.deepcopy(roots)
 
             for i in range(length):
 
@@ -95,7 +95,7 @@ class Method:
                 root[i] = (vector[i] - s1 - s2) / matrix[i][i]
 
             e = sum(abs(root[i] - roots[i])  for i in range(length))
-            roots = root
+            roots = copy.deepcopy(root)
             if e < 0.0001:
                 break 
             
