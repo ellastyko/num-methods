@@ -1,5 +1,23 @@
 {% extends 'base_methods.html' %}
 {% block title %}Definite integral{% endblock %}
 {% block body %}
-    <h1>int</h1>
+<section class='main'>
+    <div class='field'>
+        <form action="POST">
+            <input type="text" name='function' placeholder="function">
+            <input type="number" name='begin' placeholder="Begin">
+            <input type="number" name='end' placeholder="End">
+            <input type="number" name='n' placeholder="n">
+            
+            <select name="method" id="">
+                <option value="">Left rectangles</option>
+                <option value="">Right rectangles</option>
+                <option value="">Center rectangles</option>
+                <option value="">Trapezoidal method</option>
+                <option value="">Simpson`s</option>
+            </select>
+            <input type="submit" value='Solve it'>
+        </form>
+    </div>
+</section>
 {% endblock %}

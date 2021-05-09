@@ -1,5 +1,18 @@
 {% extends 'base_methods.html' %}
 {% block title %}Differential equation{% endblock %}
 {% block body %}
-    <h1>equ</h1>
+<section class='main'>
+    <div class='field'>
+        <div class='field'>
+            <form action="POST">
+                <select name="method" id="">
+                    <option value="">Euler</option>
+                    <option value="">Runge Kutta 2nd order method</option>
+                    <option value="">Runge Kutta 3nd order method</option>
+                    <option value="">Runge Kutta 4nd order method</option>
+                </select>
+            </form>
+        </div>
+    </div>
+</section>
 {% endblock %}

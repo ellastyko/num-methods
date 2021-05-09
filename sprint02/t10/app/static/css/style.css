@@ -5,6 +5,7 @@
 
 :root {
     --width-main: 650px;
+    --width-field: 800px;
 }
 
 /* MAIN PAGE */
@@ -35,3 +36,52 @@
     background: rgba(237, 28, 36, 0.0);
 }
 
+/* SOLVE BLOCK */
+.field {
+    position: absolute;
+    width: var(--width-field);
+    height: 600px;
+    padding: 20px 0 0 20px;
+
+    top: 100px;
+    left: calc(50% - (var(--width-field) / 2));
+
+    background: rgba(255, 255, 255, 0.747);
+    border-radius: 20px;
+}
+
+.field select {
+    margin-left: 30px;
+    color: rgb(87, 86, 86);
+    font: 500 14px 'Arial';
+    width: 150px;
+    height: 35px;
+    outline: none;
+    background: rgba(237, 28, 36, 0.0);
+}
+.field input {
+    font: 500 14px 'Arial';
+    outline: none;
+    border: none;
+    background: rgba(237, 28, 36, 0.0);
+}
+
+.field input[type='number'] {
+    
+    margin-right: 15px;
+    width: 50px;
+    border-bottom: 2px solid #092E72;  
+}
+
+.field input[type='text'] {
+    margin-right: 30px;
+    width:  200px;
+    border-bottom: 2px solid #092E72;
+}
+
+.field input[type='submit'] {
+    margin: 0 auto;
+    width:  200px;
+    height: 50px;
+    border: 2px solid grey;
+}
