@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
                 compare:    document.querySelector('#compare').checked
             }              
         }
-        console.log(data)
+        // console.log(data)
         
         xhr.open('POST', 'http://127.0.0.1:5000/definite_integral');
 

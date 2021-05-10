@@ -24,8 +24,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
                 method:     document.querySelector('#method').value
             }              
         }
-        console.log(data)
-        // var form = new FormData(document.forms.myform);
+        // console.log(data)
         xhr.open('POST', 'http://127.0.0.1:5000/differential_equation');
         xhr.setRequestHeader('Content-type', 'application/json');
         xhr.onreadystatechange = function () {
