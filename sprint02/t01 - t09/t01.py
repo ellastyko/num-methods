@@ -3,8 +3,10 @@ import numpy as np
 # FORMULE
 # S = step*[f(x1) + f(x2) + ...]
 
-def func(x):
-    return x*x - 4
+l = [
+	lambda x: x*x - 4,
+	(lambda x: x*4 - 3)
+] 
 
 def left_rect(function, begin, end, iterations):
 
@@ -18,4 +20,4 @@ def left_rect(function, begin, end, iterations):
     
 
 if __name__ == "__main__":
-    print(left_rect(func, float(2), float(4), 100))
+    print(left_rect(l[1], float(2), float(4), 100))

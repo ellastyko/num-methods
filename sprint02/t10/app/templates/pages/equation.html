@@ -3,16 +3,32 @@
 {% block body %}
 <section class='main'>
     <div class='field'>
-        <div class='field'>
             <form action="POST">
-                <select name="method" id="">
-                    <option value="">Euler</option>
-                    <option value="">Runge Kutta 2nd order method</option>
-                    <option value="">Runge Kutta 3nd order method</option>
-                    <option value="">Runge Kutta 4nd order method</option>
+                <select name="example" id="example">
+                    <option value="7">-xy</option>
+                    <option value="8">y + x</option>
+                    <option value="9">(3x - 12x^2) * y</option>
+                    <option value="10">x^2 + y</option>
+                    <option value="11">x^3 + 2y</option>
                 </select>
+                <input type="number" name='begin' id='begin' placeholder="Begin" required>
+                <input type="number" name='end' id='end' placeholder="End" required>
+                <input type="number" name='n' id='n' placeholder="n" required>
+                <input type="number" name='y0' id='y0' placeholder="y0" required>
+
+                <select name="method" id="method">
+                    <option value="euler">Euler</option>
+                    <option value="rung-kutte-2">Runge Kutta 2nd order method</option>
+                    <option value="rung-kutte-3">Runge Kutta 3nd order method</option>
+                    <option value="rung-kutte-4">Runge Kutta 4nd order method</option>
+                </select>
+                <input type="submit" value='Solve it' id='equation_submit'>
             </form>
-        </div>
+            <div class='result-block'>
+                <div class='table-grafic'></div>
+                <button id='change-result' hidden>Table</button> 
+            </div> 
     </div>
 </section>
+<script src="{{ url_for('static', filename='js/equation.js') }}"></script>
 {% endblock %}

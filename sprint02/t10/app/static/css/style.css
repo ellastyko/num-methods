@@ -41,7 +41,7 @@
     position: absolute;
     width: var(--width-field);
     height: 600px;
-    padding: 20px 0 0 20px;
+    padding: 20px 20px 0 20px;
 
     top: 100px;
     left: calc(50% - (var(--width-field) / 2));
@@ -51,7 +51,7 @@
 }
 
 .field select {
-    margin-left: 30px;
+    margin: 0 30px 0 30px;
     color: rgb(87, 86, 86);
     font: 500 14px 'Arial';
     width: 150px;
@@ -59,8 +59,13 @@
     outline: none;
     background: rgba(237, 28, 36, 0.0);
 }
+
+.field h2 {
+    margin-bottom: 20px;
+}
+
 .field input {
-    font: 500 14px 'Arial';
+    font: 500 16px 'Arial';
     outline: none;
     border: none;
     background: rgba(237, 28, 36, 0.0);
@@ -69,19 +74,50 @@
 .field input[type='number'] {
     
     margin-right: 15px;
-    width: 50px;
+    width: 55px;
     border-bottom: 2px solid #092E72;  
 }
 
 .field input[type='text'] {
+    
     margin-right: 30px;
     width:  200px;
     border-bottom: 2px solid #092E72;
 }
 
 .field input[type='submit'] {
-    margin: 0 auto;
+    display: block;
+    margin: 20px auto;
     width:  200px;
     height: 50px;
     border: 2px solid grey;
+}
+
+.field .result-block {
+    float: left;
+    width: 100%;
+    
+}
+
+.result-block .table-grafic { 
+    float: left;
+    height: 380px;
+    width: 95%;
+}
+
+.result-block button {
+
+    width: 5%;
+    height: 380px;
+
+    float: left;
+    padding-left: 10px;
+    text-align: center;
+    font: 500 25px 'Arial';
+    word-wrap: break-word;
+    letter-spacing: 13px;
+    border: none;
+    background: #4b89cb9c;
+    border-radius: 0 15px 15px 0;
+    /* background: rgba(237, 28, 36, 0.0); */
 }

@@ -3,21 +3,39 @@
 {% block body %}
 <section class='main'>
     <div class='field'>
+        <h2>Definite integral</h2>
         <form action="POST">
-            <input type="text" name='function' placeholder="function">
-            <input type="number" name='begin' placeholder="Begin">
-            <input type="number" name='end' placeholder="End">
-            <input type="number" name='n' placeholder="n">
-            
-            <select name="method" id="">
-                <option value="">Left rectangles</option>
-                <option value="">Right rectangles</option>
-                <option value="">Center rectangles</option>
-                <option value="">Trapezoidal method</option>
-                <option value="">Simpson`s</option>
+            <select name="example" id="example">
+                <option value="0">x^2 + 2</option>
+                <option value="1">x^2 - 4x</option>
+                <option value="2">x^3 - 6x</option>
+                <option value="3">exp(-x)</option>
+                <option value="4">sin(-x)</option>
+                <option value="5">exp(-x^2)</option>
+                <option value="6">exp(-4x - x^3)</option>
             </select>
-            <input type="submit" value='Solve it'>
+            <input type="number" name='begin' id='begin' placeholder="Begin" required>
+            <input type="number" name='end' id='end' placeholder="End" required>
+            <input type="number" name='n' id='n' placeholder="n" required>
+            
+            <select name="method" id="method">
+                <option value="left_rect">Left rectangles</option>
+                <option value="right_rect">Right rectangles</option>
+                <option value="center_rect">Center rectangles</option>
+                <option value="trapezoidal">Trapezoidal method</option>
+                <option value="simpsons">Simpson`s</option>
+            </select>
+            <input type="checkbox" id='compare'>
+            <label for="compare">Compare</label>
+            <br>
+            <input type="submit" value='Solve it' id='integral_submit'>
         </form>
+        <div class='result-block'>
+            <h1 id='result' hidden></h1>
+            <div class='table-grafic'></div>
+            <button id='change-result' hidden>Table</button> 
+        </div> 
     </div>
 </section>
+<script src="{{ url_for('static', filename='js/integral.js') }}"></script>
 {% endblock %}
