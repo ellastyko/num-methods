@@ -5,7 +5,6 @@ def func(x, y):
 
 def runge_kutta_fourth(function, begin, end, y0, iterations):
 
-    
     step = (end - begin) / iterations
     y = np.zeros(iterations + 1)
     x, y[0] = begin, y0

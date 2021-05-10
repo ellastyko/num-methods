@@ -1,4 +1,5 @@
 import numpy as np
+# Formules https://planetcalc.ru/8400/?thanks=1
 
 def func(x, y):
     return x ** 2 + y
