@@ -34,30 +34,30 @@ class Window(QWidget):
         palette.setBrush(QPalette.Window, QBrush(sImage))
         self.setPalette(palette)
 
-        self.cramer = QPushButton('Union' , self)
-        self.cramer.setObjectName("union")
-        self.cramer.setGeometry(0, 0, 200, 50)
-        self.cramer.clicked.connect(self.solve)
+        self.union = QPushButton('Union' , self)
+        self.union.setObjectName("union")
+        self.union.setGeometry(0, 0, 200, 50)
+        self.union.clicked.connect(self.solve)
 
-        self.gauss = QPushButton('Intersection' , self)
-        self.gauss.setObjectName("intersection")
-        self.gauss.setGeometry(200, 0, 200, 50)
-        self.gauss.clicked.connect(self.solve)
+        self.intersection = QPushButton('Intersection' , self)
+        self.intersection.setObjectName("intersection")
+        self.intersection.setGeometry(200, 0, 200, 50)
+        self.intersection.clicked.connect(self.solve)
 
-        self.seidel = QPushButton('Difference' , self)
-        self.seidel.setObjectName("difference")
-        self.seidel.setGeometry(400, 0, 200, 50)
-        self.seidel.clicked.connect(self.solve)
+        self.diff = QPushButton('Difference' , self)
+        self.diff.setObjectName("difference")
+        self.diff.setGeometry(400, 0, 200, 50)
+        self.diff.clicked.connect(self.solve)
 
-        self.jordan_gauss = QPushButton('Symmetrical diff.' , self)
-        self.jordan_gauss.setObjectName("symmetrical_difference")
-        self.jordan_gauss.setGeometry(600, 0, 200, 50)
-        self.jordan_gauss.clicked.connect(self.solve)
+        self.symm_diff = QPushButton('Symmetrical diff.' , self)
+        self.symm_diff.setObjectName("symmetrical_difference")
+        self.symm_diff.setGeometry(600, 0, 200, 50)
+        self.symm_diff.clicked.connect(self.solve)
 
-        self.jacobi = QPushButton('Include' , self)
-        self.jacobi.setObjectName("include")
-        self.jacobi.setGeometry(800, 0, 200, 50)
-        self.jacobi.clicked.connect(self.solve)
+        self.include = QPushButton('Include' , self)
+        self.include.setObjectName("include")
+        self.include.setGeometry(800, 0, 200, 50)
+        self.include.clicked.connect(self.solve)
 
         
         self.A = QLineEdit(self)
@@ -70,13 +70,22 @@ class Window(QWidget):
         self.B.setPlaceholderText('Write set B')
 
 
+        self.swap = QPushButton('Swap' , self)
+        self.swap.setObjectName("swap")
+        self.swap.setGeometry(90, 400, 200, 50)
+        self.swap.clicked.connect(self.toswap)
+
         # Result widget
         self.result = QLabel(self)
         self.result.setObjectName("result")
         self.result.setGeometry(450, 150, 400, 300)
         self.result.setAlignment(QtCore.Qt.AlignCenter)
-        # self.result.setVisible(False)
+        self.result.setVisible(False)
 
+    def toswap(self):
+        temp = self.A.text()
+        self.A.setText(self.B.text())
+        self.B.setText(temp)
 
     def convert(self):
         A = self.A.text().split(' ')

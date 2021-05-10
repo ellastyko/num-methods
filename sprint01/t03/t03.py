@@ -26,7 +26,6 @@ def seidel(matrix, vector):
 	return roots
 	
 
- 
 
 if __name__ == '__main__':
     matrix = [

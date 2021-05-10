@@ -54,15 +54,14 @@ QPushButton:focus {
     border-radius: 20px;
 }
 
-#checkit {
+#swap {
     border: 2px solid white;
-    background: rgba(117, 190, 218, 0.0);
 }
 
-#checkit:hover {
-    background: rgba(117, 189, 218, 0.281);
+#swap:hover {
+    background: rgba(180, 228, 247, 0.39);
 }
 
-#checkit:focus {
+#swap:focus {
     background: rgba(117, 190, 218, 0.0);
 }
