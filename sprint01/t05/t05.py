@@ -1,7 +1,7 @@
 import math
 import numpy as np
 
-
+# http://www.hpcc.unn.ru/?dir=1052
 def jacobi(matrix, vector, N = 100):
 
     roots = [0 for i in range(len(matrix))]  	

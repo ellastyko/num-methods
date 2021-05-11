@@ -228,7 +228,7 @@ class Window(QWidget):
     def checking(self, matrix, vector, roots):
         print(matrix, vector, roots)
         print(self.solve_method.checking(matrix, vector, roots))
-        string = '<h2>Checking</h2>'
+        string = f'<h2>Checking</h2><p>{self.solve_method.checking(matrix, vector, roots)}</p>'
         for i in range(len(matrix)):
             string += '<p>'
             for j in range(len(matrix[i])):
